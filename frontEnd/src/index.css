@@ -1,0 +1,109 @@
+:root {
+  --main-color: #efefef;
+  --primary-color: #1d2d3d;
+  --secondary-color: #495e74;
+  --gray-color: #778697;
+  --dark-color: #292b2c;
+  --blue-color: #0275d8;
+  --green-color: #27ae60;
+  --green-sea-color: #16a085;
+  --pumpkin-color: #d35400;
+  --red-color: #d9534f;
+  --white-color: #fff;
+}
+.white {
+  color: #fff !important;
+}
+.header {
+  background-image: url("./images/home-bg.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  text-decoration: none !important;
+}
+.cat {
+  border-top: 1px black solid !important;
+  border-bottom: 1px black solid !important;
+  padding: 10px;
+  text-align: center;
+}
+body {
+  background-color: var(--main-color);
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+}
+
+/* Some Global Classes For icons */
+.bi-pencil-square {
+  color: var(--green-sea-color);
+  margin-right: 15px;
+}
+
+.bi-trash-fill {
+  color: var(--red-color);
+}
+
+/* Scrollbar Classes For Google Chrome */
+html::-webkit-scrollbar {
+  width: 12px;
+}
+
+html::-webkit-scrollbar-track {
+  background-color: rgb(187, 179, 179);
+}
+
+html::-webkit-scrollbar-thumb {
+  background-color: var(--dark-color);
+  border-radius: 15px;
+}
+.pagination {
+  padding: 5px;
+  margin-bottom: 20px;
+}
+.pagination .page {
+  border: var(--gray-color) 1px solid;
+  font-size: 20px;
+  font-weight: 500;
+  background-color: #fff;
+  transition: 0.2s ease-in-out all;
+  cursor: pointer;
+  height: 40px;
+  width: 40px;
+  display: flex ;
+  align-items: center;
+  justify-content: center;
+}
+.pagination span:hover {
+  background-color: #f2f2f2;
+}
+
+footer{
+  color: var(--white-color);
+  font-size: 21px   ;
+  background-color: var(--blue-color);
+  display: flex ;
+   align-items: center;
+   justify-content: center ;
+    height: 50px ;
+}
