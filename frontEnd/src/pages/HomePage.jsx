@@ -16,7 +16,7 @@ const homePage = () => {
   }, []);
 
   return (
-    <div>
+    <div className='allpages'>
       <div
         className="header w-100"
         style={{

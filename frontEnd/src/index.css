@@ -28,6 +28,14 @@
   font-family: Arial, Helvetica, sans-serif;
   text-decoration: none !important;
 }
+
+
+.allpages{
+  min-height: 85vh;
+  background-color: var(--main-color);
+}
+
+
 .cat {
   border-top: 1px black solid !important;
   border-bottom: 1px black solid !important;

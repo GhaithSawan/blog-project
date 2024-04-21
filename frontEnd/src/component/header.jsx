@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 
 function Header() {
   return (
-    <div>
+    <div style={{height:"10vh"}}>
       <Navbar
         expand="lg"
         style={{
@@ -72,7 +72,7 @@ function Header() {
                 <LuFileSignature style={{ margin: "0 5px 3px 0 " }} />
                 Posts
               </Link>
-              <Link to="/create" style={{ color: "#fff" }}>
+              <Link to="/CreatePost" style={{ color: "#fff" }}>
                 <FaRegPlusSquare style={{ margin: "0 5px 3px 0 " }} />
                 Create
               </Link>
