@@ -1,9 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const CreatePost = () => {
 
-  
+  const [addpost, setaddpost] = useState()
 
+  useEffect(() => {
+    PostRequest(
+      {
+        title:,
+        des
+      },"/postRouts/createPost"
+    )
+  }, [])
+  
   return (
     <div className="allpages">
       <div
