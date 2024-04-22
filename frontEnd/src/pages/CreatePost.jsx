@@ -55,10 +55,20 @@ const CreatePost = () => {
               width: "70%",
               margin: "10px 0 10px 0",
               padding: "10px",
-              backgroundColor
+              backgroundColor:"#778697"
             
             }}/>
-          <button type="submit">Create</button>
+          <button type="submit" style={{
+              borderRadius: "5px",
+              width: "70%",
+              margin: "10px 0 10px 0",
+              padding: "10px",
+              border: "1px #778697 solid",
+              backgroundColor:"#1d2d3d",
+              color:"#fff",
+              fontSize:"20px"
+            
+            }}>Create</button>
         </form>
       </div>
     </div>
