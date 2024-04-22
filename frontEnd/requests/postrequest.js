@@ -1,5 +1,8 @@
 import axios from "axios";
 
 export function PostRequest (body){
-    axios.post("",)
+    let header  = {}
+    axios.post("",header,body).then((res)=>{
+        log
+    })
 }
