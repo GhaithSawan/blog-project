@@ -8,7 +8,8 @@ const CreatePost = () => {
     PostRequest(
       {
         title:,
-        des
+        description,
+        caticory
       },"/postRouts/createPost"
     )
   }, [])

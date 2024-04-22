@@ -1,9 +1,9 @@
 import axios from "axios";
 import { Urlaxios } from "../src/constant";
 
-export function PostRequest (body,path,state){
-    let header  = {}
-    axios.post(`${Urlaxios}${path}`,header,body).then((res)=>{
-         console.log("res",res);
-    })
+export async function PostRequest(body, path) {
+  let header = {};
+  let data = await axios.post(`${Urlaxios}${path}`, header, body);
+  console.log("data", data);
+//   return data;
 }
