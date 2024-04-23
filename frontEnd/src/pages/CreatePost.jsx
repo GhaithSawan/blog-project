@@ -2,20 +2,18 @@ import React, { useEffect, useState } from "react";
 import { PostRequest } from "../../requests/postrequest";
 
 const CreatePost = () => {
-  const [post, setPost] = useState({});
+  const [title, settitle] = useState("");
+  const [desc, setdesc] = useState("");
+  const [cat, setcat] = useState("");
+  const [file, setfile] = useState(null);
 
-  useEffect(() => {}, []);
-  const onSub = async (e) => {
-    await PostRequest(
-      {
-        title: e?.target?.input?.value,
-        description: e?.target?.textarea?.value,
-        caticory: e?.target?.select?.value,
-      },
-      "/postRouts/createPost"
-    );
-  };
-
+  function posthandler(e) {
+    e.preventDefault();
+    console.log(title);
+    console.log(desc);
+    console.log(cat);
+    console.log(file);
+  }
   return (
     <div className="allpages">
       <div
@@ -29,13 +27,7 @@ const CreatePost = () => {
           Create New Post
         </h2>
 
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            onSub(e);
-          }}
-          className="container d-flex align-items-center justify-content-center flex-column "
-        >
+        <form className="container d-flex align-items-center justify-content-center flex-column ">
           <input
             type="text"
             placeholder="Add title to your post"
@@ -45,6 +37,10 @@ const CreatePost = () => {
               margin: "40px 0 10px 0",
               padding: "10px",
               border: "1px #778697 solid",
+            }}
+            value={title}
+            onChange={(e) => {
+              settitle(e.target?.value);
             }}
           />
           <select
@@ -56,8 +52,12 @@ const CreatePost = () => {
               padding: "10px",
               border: "1px #778697 solid",
             }}
+            value={cat}
+            onChange={(e) => {
+              setcat(e.target?.value);
+            }}
           >
-            <option disabled value=" ">
+            <option disabled value="">
               Select A Category
             </option>
             <option value="Coffee">Coffee</option>
@@ -73,6 +73,10 @@ const CreatePost = () => {
               padding: "10px",
               border: "1px #778697 solid",
             }}
+            value={desc}
+            onChange={(e) => {
+              setdesc(e.target?.value);
+            }}
           ></textarea>
           <input
             type="file"
@@ -84,6 +88,10 @@ const CreatePost = () => {
               margin: "10px 0 10px 0",
               padding: "10px",
               backgroundColor: "#778697",
+            }}
+            value={file}
+            onChange={(e) => {
+              setfile(e.target?.value);
             }}
           />
           <button
@@ -98,6 +106,7 @@ const CreatePost = () => {
               color: "#fff",
               fontSize: "20px",
             }}
+            onClick={(e) => posthandler(e)}
           >
             Create
           </button>
