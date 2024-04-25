@@ -11,9 +11,11 @@
   --red-color: #d9534f;
   --white-color: #fff;
 }
+
 .white {
   color: #fff !important;
 }
+
 .header {
   background-image: url("./images/home-bg.jpg");
   background-repeat: no-repeat;
@@ -27,10 +29,11 @@
   padding: 0;
   font-family: Arial, Helvetica, sans-serif;
   text-decoration: none !important;
+  overflow-wrap: break-word;
 }
 
 
-.allpages{
+.allpages {
   min-height: 85vh;
   background-color: var(--main-color);
 }
@@ -42,6 +45,7 @@
   padding: 10px;
   text-align: center;
 }
+
 body {
   background-color: var(--main-color);
   overflow-x: hidden;
@@ -85,10 +89,12 @@ html::-webkit-scrollbar-thumb {
   background-color: var(--dark-color);
   border-radius: 15px;
 }
+
 .pagination {
   padding: 5px;
   margin-bottom: 20px;
 }
+
 .pagination .page {
   border: var(--gray-color) 1px solid;
   font-size: 20px;
@@ -98,20 +104,33 @@ html::-webkit-scrollbar-thumb {
   cursor: pointer;
   height: 40px;
   width: 40px;
-  display: flex ;
+  display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .pagination span:hover {
   background-color: #f2f2f2;
 }
 
-footer{
+footer {
   color: var(--white-color);
-  font-size: 21px   ;
+  font-size: 21px;
   background-color: var(--blue-color);
-  display: flex ;
-   align-items: center;
-   justify-content: center ;
-    height: 50px ;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+}
+
+
+/* image's post effect*/
+
+.imagePostHover {
+  transition: all .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.imagePostHover:hover {
+  transform: scale(1.05);
+  filter: brightness(1.05) ;
 }

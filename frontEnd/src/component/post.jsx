@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import {Link} from "react-router-dom"
-
 function Post({ data }) {
   let date;
   useEffect(() => {
@@ -18,6 +17,7 @@ function Post({ data }) {
           style={{ objectFit: "cover", width: "300px", height: "300px" }}
           variant="top"
           src={data.image.url}
+          className='imagePostHover'
         />
       </div>
       <Card.Body>
@@ -50,7 +50,7 @@ function Post({ data }) {
           </span>
         </div>
         <Card.Text>{data.description}</Card.Text>
-        <Link to={`post/deltails/${data.id}`}>
+        <Link to={`/post/details/${data.id}`}>
         <Button className="w-100 bg-success border-0">Read More ...</Button>
         </Link>
       </Card.Body>

@@ -19,7 +19,7 @@ const Postslist = () => {
   }, []);
 
   return (
-      <div className=" col-md-8 col-sm-12 d-inline-block d-flex flex-column gap-4">
+      <div className=" col-md-8 col-sm-12  d-flex flex-column gap-4">
         {postsData?.length > 0
           ? postsData.map((e, index) => {
               return (
