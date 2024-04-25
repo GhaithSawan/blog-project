@@ -9,10 +9,12 @@ const CreatePost = () => {
 
   function posthandler(e) {
     e.preventDefault();
-    console.log(title);
-    console.log(desc);
-    console.log(cat);
-    console.log(file);
+    //todo react toastify
+    let form_data = new FormData()
+    form_data.append("title",title)
+    form_data.append("description",desc)
+    form_data.append("caticory",cat)
+    form_data.append("img",file)
   }
   return (
     <div className="allpages">
@@ -89,9 +91,8 @@ const CreatePost = () => {
               padding: "10px",
               backgroundColor: "#778697",
             }}
-            value={file}
             onChange={(e) => {
-              setfile(e.target?.value);
+              setfile(e.target?.files[0]);
             }}
           />
           <button
