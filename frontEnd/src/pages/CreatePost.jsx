@@ -8,11 +8,16 @@ const CreatePost = () => {
   const [file, setfile] = useState(null);
 
   function posthandler(e) {
+    // todo react-toastify
     e.preventDefault();
-    console.log(title);
-    console.log(desc);
-    console.log(cat);
-    console.log(file);
+
+    let form_data = new FormData();
+    form_data.append("title", title);
+    form_data.append("description", desc);
+    form_data.append("caticory", cat);
+    form_data.append("img", file);
+
+    
   }
   return (
     <div className="allpages">

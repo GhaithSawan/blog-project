@@ -1,10 +1,13 @@
 import { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import {Link} from "react-router-dom"
 
 function Post({ data }) {
   let date;
   useEffect(() => {
+  console.log(data);
+
     date = new Date(data?.createdAt);
   }, []);
 
@@ -47,7 +50,9 @@ function Post({ data }) {
           </span>
         </div>
         <Card.Text>{data.description}</Card.Text>
+        <Link to={`post/deltails/${data.id}`}>
         <Button className="w-100 bg-success border-0">Read More ...</Button>
+        </Link>
       </Card.Body>
     </Card>
   );
