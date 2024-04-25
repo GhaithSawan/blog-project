@@ -15,6 +15,7 @@ function Post({ data }) {
           style={{ objectFit: "cover", width: "300px", height: "300px" }}
           variant="top"
           src={data.image.url}
+          className='imagePostHover'
         />
       </div>
       <Card.Body>

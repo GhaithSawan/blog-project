@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 
 function Header() {
   return (
-    <div style={{height:"10vh"}}>
+    <div >
       <Navbar
         expand="lg"
         style={{

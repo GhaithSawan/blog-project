@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer style={{height:"5vh"}}>
+    <footer >
       Copyright 2024 
     </footer>
   );

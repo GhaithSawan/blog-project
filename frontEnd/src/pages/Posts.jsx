@@ -16,7 +16,7 @@ const Posts = () => {
   }, []);
   return (
     <div className="allpages">
-      <div className="container my-5 ">
+      <div className="container py-5 ">
         <h3
           style={{ width: "max-content" }}
           className="title border-bottom border-2 border-dark "
