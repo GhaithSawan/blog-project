@@ -8,17 +8,32 @@ import {
 import { AiOutlineLike } from "react-icons/ai";
 import { Urlaxios } from "../constant";
 import axios from "axios"
+import CommentForm from "./commentForm";
+import Commentlist from "./commentlist ";
 
 const PostDetails = () => {
+
   let { id } = useParams();
-  
+
   const [postData, setPostData] = useState();
+  const [date, setdate] = useState();
+
+//////////////////////////date
 
   useEffect(() => {
+    let date = new Date()
+    let out = date.getDay(postData?.createdAt) + "/" + (date.getMonth(postData?.createdAt) +1)+ "/" + date.getFullYear(postData?.createdAt)
+      setdate(out)
+  }, [postData])
+
+
+  useEffect(() => {
+    window.scrollTo(0,0)
     axios(`${Urlaxios}/postRouts/getPost/${id}`)
       .then((res) => {
-        console.log(res);
-        setPostData(res.data);
+        console.log(res.data);
+        setPostData(res.data)
+
       })
       .catch((err) => {
         console.log(err);
@@ -42,8 +57,8 @@ const PostDetails = () => {
           >
             <img
               className="imagePostHover"
-              src={"/images/baghdad.jpg"}
-              alt=""
+              src={postData?.image?.url}
+
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           </div>
@@ -87,7 +102,7 @@ const PostDetails = () => {
             }}
           >
             <img
-              src={"/images/user-avatar.png"}
+              src={postData?.user?.profilePhoto?.url}
               style={{
                 backgroundColor: "red",
                 width: "100%",
@@ -98,16 +113,16 @@ const PostDetails = () => {
             />
           </div>
           <div className="info">
-            <h6 style={{ color: "blue", margin: "0" }}>ghaith</h6>
-            <span style={{ color: "#495e74" }}>3/3/432</span>
+            <h6 style={{ color: "blue", margin: "0" }}>{postData?.user?.username}</h6>
+            <span style={{ color: "#495e74" }}>{date}</span>
           </div>
         </div>
         <div className="postinfo mt-3 " style={{ textAlign: "center" }}>
           <h3 className="title  " style={{ fontSize: "25px" }}>
-            ghaithdsad'lksla;kmd;saljdklsajd
+            {postData?.title}
           </h3>
           <div className="desc">
-            dsjaldkdjisa;dklsajdkjsakjdsk;ad'sajdihjdsad'sakdaksuj
+          {postData?.description}
           </div>
         </div>
         <div
@@ -118,8 +133,9 @@ const PostDetails = () => {
             justifyContent: "space-between",
           }}
         >
-          <div className="like" style={{ cursor: "pointer" }}>
+          <div className="like" style={{ cursor: "pointer" ,display:"flex" , alignItems:"center",justifyContent:"center" ,gap:"5px"}}>
             <AiOutlineLike size={"25px"} />
+            <span>{postData?.likes.length}</span>
           </div>
           <div
             className="edit"
@@ -138,6 +154,11 @@ const PostDetails = () => {
             </div>
           </div>
         </div>
+
+
+        <CommentForm/>
+        <Commentlist data = {postData}/>
+
       </div>
     </div>
   );

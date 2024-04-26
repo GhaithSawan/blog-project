@@ -8,10 +8,13 @@ import Register from "./pages/Register";
 import { Routes, Route } from "react-router-dom";
 import Footer from "./component/footer";
 import PostDetails from "./component/PostDetails";
+import {ToastContainer} from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <>
+    <ToastContainer position="top-right" theme="colored"/>
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />

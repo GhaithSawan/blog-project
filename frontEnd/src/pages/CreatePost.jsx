@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { PostRequest } from "../../requests/postrequest";
+import { toast } from "react-toastify";
 
 const CreatePost = () => {
   const [title, settitle] = useState("");
@@ -16,6 +17,7 @@ const CreatePost = () => {
     form_data.append("description",desc)
     form_data.append("caticory",cat)
     form_data.append("img",file)
+    toast.error("dsa")
   }
   return (
     <div className="allpages">
