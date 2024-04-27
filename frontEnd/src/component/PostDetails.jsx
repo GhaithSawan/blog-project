@@ -40,6 +40,12 @@ const PostDetails = () => {
       });
   }, []);
 
+
+
+
+
+
+
   return (
     <div className="allpages p-3 ">
       <div
@@ -158,6 +164,10 @@ const PostDetails = () => {
 
         <CommentForm/>
         <Commentlist data = {postData}/>
+
+
+
+      
 
       </div>
     </div>

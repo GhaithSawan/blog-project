@@ -1,47 +1,65 @@
-import React from 'react'
-import { MdOutlineDeleteOutline, MdOutlineEdit } from 'react-icons/md'
-
+import React from "react";
+import { MdOutlineDeleteOutline, MdOutlineEdit } from "react-icons/md";
+import CommentModel from "./commentModel"
 const Commentlist = ({ data }) => {
+  ///modeleditpost
+
+  const [show, setShow] = useState(false);
+  const handleShow = () => setShow(true);
+
   return (
     <div style={{ marginTop: "20px" }}>
       <h4 style={{ borderBottom: "1px black solid" }}>
         {data?.Comments.length} Comment
       </h4>
-      {
-        data?.commment?.length > 0 ? data.commment.map((e) => {
-          return (
-            <div className="commentinfo " style={{ border: "1px gray solid", padding: "5px", borderRadius: "5px" }}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <h5 className="username">
-                 {e?.user.username}
-                </h5>
-                <div className="date" style={{ color: "red" }}>{e?.user.createdAt}</div>
-              </div>
-
-              <div className="desc my-2"></div>
+      {data?.commment?.length > 0
+        ? data.commment.map((e) => {
+            return (
               <div
-                className="edit"
+                className="commentinfo "
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-
-                  gap: "10px",
+                  border: "1px gray solid",
+                  padding: "5px",
+                  borderRadius: "5px",
                 }}
               >
-                <div style={{ cursor: "pointer" }}>
-                  <MdOutlineEdit size={"25px"} />
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <h5 className="username">{e?.user.username}</h5>
+                  <div className="date" style={{ color: "red" }}>
+                    {e?.user.createdAt}
+                  </div>
                 </div>
-                <div style={{ cursor: "pointer" }}>
-                  <MdOutlineDeleteOutline size={"25px"} />
+
+                <div className="desc my-2"></div>
+                <div
+                  className="edit"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+
+                    gap: "10px",
+                  }}
+                >
+                  <div style={{ cursor: "pointer" }} onClick={handleShow}>
+                    <MdOutlineEdit size={"25px"} />
+                  </div>
+                  <div style={{ cursor: "pointer" }}>
+                    <MdOutlineDeleteOutline size={"25px"} />
+                  </div>
                 </div>
               </div>
-            </div>
-          )
-        }) : "No Comment"
-      }
-
+            );
+          })
+        : "No Comment"}
+      <CommentModel  setShow={setShow} show={show}/>
     </div>
-  )
-}
+  );
+};
 
-export default Commentlist 
+export default Commentlist;
