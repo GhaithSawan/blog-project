@@ -61,7 +61,7 @@ router.delete(
 );
 
 router.put(
-  "/updateComment/:id",
+  "/w/:id",
   verfiyToken,
   validateObjectId,
   expressAsyncHandler(async (req, res) => {
@@ -73,11 +73,8 @@ router.put(
     let comment = await commentModel.findById(req.params.id);
 
     if (req.user.id !== comment.user.toString()) {
-      console.log("1");
       return res.status(400).json({ message: "not authorized" });
     }else{
-    console.log("2");
-
       let newComment = await commentModel.findByIdAndUpdate(
         req.params.id,
         {

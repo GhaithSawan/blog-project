@@ -18,29 +18,25 @@ const PostDetails = () => {
   const [postData, setPostData] = useState();
   const [date, setdate] = useState();
 
-//////////////////////////date
+  //////////////////////////date
 
   useEffect(() => {
-    let date = new Date()
-    let out = date.getDay(postData?.createdAt) + "/" + (date.getMonth(postData?.createdAt) +1)+ "/" + date.getFullYear(postData?.createdAt)
-      setdate(out)
+    let date = new Date(postData?.createdAt)
+    const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} `;
+    setdate(formattedDate)
   }, [postData])
 
 
   useEffect(() => {
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0)
     axios(`${Urlaxios}/postRouts/getPost/${id}`)
       .then((res) => {
-        console.log(res.data);
         setPostData(res.data)
-
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-
-
 
 
 
@@ -128,7 +124,7 @@ const PostDetails = () => {
             {postData?.title}
           </h3>
           <div className="desc">
-          {postData?.description}
+            {postData?.description}
           </div>
         </div>
         <div
@@ -139,7 +135,7 @@ const PostDetails = () => {
             justifyContent: "space-between",
           }}
         >
-          <div className="like" style={{ cursor: "pointer" ,display:"flex" , alignItems:"center",justifyContent:"center" ,gap:"5px"}}>
+          <div className="like" style={{ cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "5px" }}>
             <AiOutlineLike size={"25px"} />
             <span>{postData?.likes.length}</span>
           </div>
@@ -162,12 +158,12 @@ const PostDetails = () => {
         </div>
 
 
-        <CommentForm/>
-        <Commentlist data = {postData}/>
+        <CommentForm />
+        <Commentlist data={postData} />
 
 
 
-      
+
 
       </div>
     </div>
