@@ -16,13 +16,6 @@
   color: #fff !important;
 }
 
-.header {
-  background-image: url("./images/home-bg.jpg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-}
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -36,15 +29,48 @@
 .allpages {
   min-height: 85vh;
   background-color: var(--main-color);
+
 }
 
 
 .cat {
-  border-top: 1px black solid !important;
-  border-bottom: 1px black solid !important;
   padding: 10px;
   text-align: center;
+  transition: all .3s ease-in;
+  position: relative;
 }
+
+.cat:hover {
+  letter-spacing: 2px;
+}
+
+.cat::after,
+.cat::before {
+  content: "";
+  position: absolute;
+  width: 5%;
+  height: 2px;
+  background-color: black;
+  transition: all .3s ease-in;
+}
+
+.cat::after {
+  left: 0;
+  top: 0;
+}
+
+.cat::before {
+  right: 0;
+  bottom: 0;
+}
+
+.cat:hover::before,
+.cat:hover::after {
+  width: 100%;
+
+}
+
+
 
 body {
   background-color: var(--main-color);
@@ -132,9 +158,51 @@ footer {
 
 .imagePostHover:hover {
   transform: scale(1.05);
-  filter: brightness(1.05) ;
+  filter: brightness(1.05);
 }
 
 .closebtn {
   margin: 0 !important;
+}
+
+.header {
+  background-image: url("./images/home-bg.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.header h1 {
+  position: relative;
+  background-color: #efefef;
+  border-radius: 10px;
+  padding: 10px;
+  z-index: 1;
+
+}
+
+.header h1:hover {
+  color: white;
+}
+
+.header h1::after {
+  content: "";
+  z-index: -1;
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  background-color: rgb(0, 0, 0);
+  height: 0%;
+  width: 0%;
+  border-radius: 50%;
+  transition: all .5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.header h1:hover::after {
+  top: 0%;
+  right: 0%;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
 }

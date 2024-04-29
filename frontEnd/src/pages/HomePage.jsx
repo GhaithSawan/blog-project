@@ -26,14 +26,8 @@ const homePage = () => {
           justifyContent: "center",
         }}
       >
-        <h1
-          style={{
-            backgroundColor: "#efefef",
-            borderRadius: "10px",
-            padding: "10px",
-          }}
-        >
-          welcome to Blog{" "}
+        <h1>
+          welcome to Blog
         </h1>
       </div>
       <div className="posts container mt-5 p-2 ">
