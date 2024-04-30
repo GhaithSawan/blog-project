@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { MdOutlineDeleteOutline, MdOutlineEdit } from "react-icons/md";
-import CommentModel from "./commentModel"
+import CommentModel from "./commentModel";
 import { deleteCommentFun } from "../utils/deletepost";
 const Commentlist = ({ data }) => {
   ///modeleditpost

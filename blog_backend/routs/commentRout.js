@@ -16,20 +16,26 @@ router.post(
   "/CreatComment",
   verfiyToken,
   expressAsyncHandler(async (req, res) => {
-    let { error } = validationcreateComment(req.body);
-    if (error) {
-      return res.status(400).json({ message: error.details[0].message }); // استخدام return للخروج من الدالة
+    console.log("req.user", req.user);
+    try {
+      let { error } = validationcreateComment(req.body);
+      if (error) {
+        return res.status(400).json({ message: error.details[0].message }); // استخدام return للخروج من الدالة
+      }
+      let profile = await userModel.findById(req.user.id);
+      console.log("profile", profile);
+      let post = await commentModel.create({
+        text: req.body.text,
+        user: req.user.id,
+        username: profile.username,
+        postId: req.body.postId,
+      });
+
+      return res.status(200).json(post);
+    } catch (error) {
+      console.log("error", error);
+      res.status(401).json(error);
     }
-    let profile = await userModel.findById(req.user.id);
-
-    let post = await commentModel.create({
-      text: req.body.text,
-      user: req.user.id,
-      username: profile.username,
-      postId: req.body.postId,
-    });
-
-    res.status(200).json(post);
   })
 );
 router.get(
@@ -74,7 +80,7 @@ router.put(
 
     if (req.user.id !== comment.user.toString()) {
       return res.status(400).json({ message: "not authorized" });
-    }else{
+    } else {
       let newComment = await commentModel.findByIdAndUpdate(
         req.params.id,
         {
@@ -84,11 +90,9 @@ router.put(
         },
         { new: true }
       );
-  
+
       res.status(200).json(newComment);
     }
-
-  
   })
 );
 module.exports = router; // تصحيح في تصدير الراوتر
