@@ -16,24 +16,24 @@ router.post(
   "/CreatComment",
   verfiyToken,
   expressAsyncHandler(async (req, res) => {
-    console.log("req.user", req.user);
     try {
+      console.log("req.user -2 ", req.user);
+
       let { error } = validationcreateComment(req.body);
       if (error) {
         return res.status(400).json({ message: error.details[0].message }); // استخدام return للخروج من الدالة
       }
-      let profile = await userModel.findById(req.user.id);
-      console.log("profile", profile);
-      let post = await commentModel.create({
-        text: req.body.text,
-        user: req.user.id,
-        username: profile.username,
-        postId: req.body.postId,
-      });
+      // let profile = await userModel.findById(req.user.id);
+      // let post = await commentModel.create({
+      //   text: req.body.text,
+      //   user: req.user.id,
+      //   username: profile.username,
+      //   postId: req.body.postId,
+      // });
 
-      return res.status(200).json(post);
+      return res.status(200).json("post");
     } catch (error) {
-      console.log("error", error);
+      console.log("s");
       res.status(401).json(error);
     }
   })

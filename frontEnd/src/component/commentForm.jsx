@@ -12,7 +12,7 @@ const CommentForm = () => {
     axios
       .post(`${Urlaxios}/CommentRouts/CreatComment`, {
         headers: {
-          authorization: "a",
+          authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZjlmN2VkZGM3M2YxMWJhMWVkNWVhOCIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE3MTE3MDIzNTF9.UMM7VEE2TN2UbGzxvAtRmKOfWWRkbOvtQmz11yFSgmc",
         },
       })
       .then((res) => {
