@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Urlaxios } from "../constant";
 import { useParams } from "react-router-dom";
 
-const CommentForm = ({reloadPostData}) => {
+const CommentForm = ({setKey}) => {
   let { id } = useParams();
   const [comment, setcomment] = useState("");
 
@@ -20,7 +20,7 @@ const CommentForm = ({reloadPostData}) => {
       })
       .then((res) => {
           console.log(res);
-          reloadPostData(); // استدعاء دالة إعادة تحميل البيانات
+          setKey(prevKey => prevKey + 1); // تحديث قيمة key
       })
       .catch((e) => {
         console.log(e);
