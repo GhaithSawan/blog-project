@@ -10,13 +10,17 @@ const CommentForm = () => {
   function createCommentFun(e) {
     e.preventDefault();
     axios
-      .post(`${Urlaxios}/CommentRouts/CreatComment`, {
+      .post(`${Urlaxios}/CommentRouts/CreatComment`,{
+        text:comment,
+        postId : id,
+      }, {
         headers: {
-          authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZjlmN2VkZGM3M2YxMWJhMWVkNWVhOCIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE3MTE3MDIzNTF9.UMM7VEE2TN2UbGzxvAtRmKOfWWRkbOvtQmz11yFSgmc",
+          Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzFmNzE4MzQ5MTgyYzIxMzNiMjQ4NyIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE3MTQ1NTA1NTd9.f65kkJjxPvIZupuCvYDpvavIH5-ioDGNVBZ0epo0n_s",
         },
       })
       .then((res) => {
-        console.log(res);
+          console.log(res);
+          reloadPostData(); // استدعاء دالة إعادة تحميل البيانات
       })
       .catch((e) => {
         console.log(e);

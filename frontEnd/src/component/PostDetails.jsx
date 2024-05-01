@@ -12,6 +12,11 @@ import CommentForm from "./commentForm";
 import Commentlist from "./commentlist ";
 
 const PostDetails = () => {
+  const [reloadData, setReloadData] = useState(false);
+  const reloadPostData = () => {
+    setReloadData(prevState => !prevState);
+  };
+  
 
   let { id } = useParams();
 
@@ -158,7 +163,7 @@ const PostDetails = () => {
         </div>
 
 
-        <CommentForm />
+        <CommentForm  reloadPostData={reloadPostData}/>
         <Commentlist data={postData} />
 
 
