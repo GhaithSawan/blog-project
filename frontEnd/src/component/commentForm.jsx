@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Urlaxios } from "../constant";
+import { Urlaxios, token } from "../constant";
 import { useParams } from "react-router-dom";
 
 const CommentForm = ({setKey}) => {
@@ -15,7 +15,7 @@ const CommentForm = ({setKey}) => {
         postId : id,
       }, {
         headers: {
-          Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzFmNzE4MzQ5MTgyYzIxMzNiMjQ4NyIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE3MTQ1NTA1NTd9.f65kkJjxPvIZupuCvYDpvavIH5-ioDGNVBZ0epo0n_s",
+          Authorization: token ,
         },
       })
       .then((res) => {
