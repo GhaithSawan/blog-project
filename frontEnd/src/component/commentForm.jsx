@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Urlaxios } from "../constant";
 import { useParams } from "react-router-dom";
 
-const CommentForm = () => {
+const CommentForm = ({reloadPostData}) => {
   let { id } = useParams();
   const [comment, setcomment] = useState("");
 
