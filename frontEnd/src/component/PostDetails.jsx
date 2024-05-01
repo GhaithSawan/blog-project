@@ -7,46 +7,43 @@ import {
 } from "react-icons/md";
 import { AiOutlineLike } from "react-icons/ai";
 import { Urlaxios } from "../constant";
-import axios from "axios"
+import axios from "axios";
 import CommentForm from "./commentForm";
 import Commentlist from "./commentlist ";
 
 const PostDetails = () => {
-  const [key, setKey] = useState(0);
-
-  const reloadPostData = () => {
-    setReloadData(prevState => !prevState);
-  };
-  
-
+  const [reloadData, setReloadData] = useState(false);
   let { id } = useParams();
-
   const [postData, setPostData] = useState();
   const [date, setdate] = useState();
 
-  //////////////////////////date
+  useEffect(() => {
+    let date = new Date(postData?.createdAt);
+    const formattedDate = `${date.getDate()}/${
+      date.getMonth() + 1
+    }/${date.getFullYear()} `;
+    setdate(formattedDate);
+  }, [postData]);
 
   useEffect(() => {
-    let date = new Date(postData?.createdAt)
-    const formattedDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()} `;
-    setdate(formattedDate)
-  }, [postData])
-
-
-  useEffect(() => {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
     axios(`${Urlaxios}/postRouts/getPost/${id}`)
       .then((res) => {
-        setPostData(res.data)
+        setPostData(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-
-
-
-
+  useEffect(() => {
+      axios(`${Urlaxios}/postRouts/getPost/${id}`)
+        .then((res) => {
+          setPostData(res.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  }, [reloadData]);
 
   return (
     <div className="allpages p-3 ">
@@ -66,7 +63,6 @@ const PostDetails = () => {
             <img
               className="imagePostHover"
               src={postData?.image?.url}
-
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           </div>
@@ -121,7 +117,9 @@ const PostDetails = () => {
             />
           </div>
           <div className="info">
-            <h6 style={{ color: "blue", margin: "0" }}>{postData?.user?.username}</h6>
+            <h6 style={{ color: "blue", margin: "0" }}>
+              {postData?.user?.username}
+            </h6>
             <span style={{ color: "#495e74" }}>{date}</span>
           </div>
         </div>
@@ -129,9 +127,7 @@ const PostDetails = () => {
           <h3 className="title  " style={{ fontSize: "25px" }}>
             {postData?.title}
           </h3>
-          <div className="desc">
-            {postData?.description}
-          </div>
+          <div className="desc">{postData?.description}</div>
         </div>
         <div
           className="icons mt-3"
@@ -141,7 +137,16 @@ const PostDetails = () => {
             justifyContent: "space-between",
           }}
         >
-          <div className="like" style={{ cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "5px" }}>
+          <div
+            className="like"
+            style={{
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "5px",
+            }}
+          >
             <AiOutlineLike size={"25px"} />
             <span>{postData?.likes.length}</span>
           </div>
@@ -163,14 +168,8 @@ const PostDetails = () => {
           </div>
         </div>
 
-
-        <CommentForm  setKey={setKey}/>
+        <CommentForm setReloadData={setReloadData} />
         <Commentlist data={postData} />
-
-
-
-
-
       </div>
     </div>
   );

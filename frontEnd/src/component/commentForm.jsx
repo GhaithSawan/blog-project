@@ -3,28 +3,34 @@ import React, { useState } from "react";
 import { Urlaxios, token } from "../constant";
 import { useParams } from "react-router-dom";
 
-const CommentForm = ({setKey}) => {
+const CommentForm = ({ setReloadData }) => {
   let { id } = useParams();
   const [comment, setcomment] = useState("");
 
   function createCommentFun(e) {
     e.preventDefault();
     axios
-      .post(`${Urlaxios}/CommentRouts/CreatComment`,{
-        text:comment,
-        postId : id,
-      }, {
-        headers: {
-          Authorization: token ,
+      .post(
+        `${Urlaxios}/CommentRouts/CreatComment`,
+        {
+          text: comment,
+          postId: id,
         },
-      })
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      )
       .then((res) => {
-          console.log(res);
-          setKey(prevKey => prevKey + 1); // تحديث قيمة key
+        console.log(res);
+        setReloadData((prevState) => !prevState);
       })
       .catch((e) => {
         console.log(e);
       });
+
+    setcomment("");
   }
   return (
     <form
