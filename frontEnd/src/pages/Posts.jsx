@@ -24,7 +24,7 @@ const Posts = () => {
           All Posts
         </h3>
         <div className="row my-3">
-          <Postslist />
+          <Postslist requestType={"pageNumber"}  value={1}/>
 
           <div className="catigry col-md-4 col-sm-12  ">
             <h3 className="cat">Categories</h3>

@@ -3,12 +3,14 @@ import axios from "axios"
 import Post from "../component/post";
 import { Urlaxios } from "../constant";
 
-const Postslist = () => {
+const Postslist = ({requestType ,value}) => {
+  console.log(requestType);
+  console.log(value);
   const [postsData, setPostsData] = useState();
   useEffect(() => {
     console.log("res");
 
-    axios(`${Urlaxios}/postRouts/getAllPosts?pageNumber=1`)
+    axios(`${Urlaxios}/postRouts/getAllPosts?${requestType}=${value}`)
       .then((res) => {
         console.log(res);
         setPostsData(res.data);
