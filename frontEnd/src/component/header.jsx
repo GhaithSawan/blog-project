@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import NavDropdown from "react-bootstrap/NavDropdown";
 import { FaPen } from "react-icons/fa6";
 import { IoHomeOutline } from "react-icons/io5";
 import { LuFileSignature } from "react-icons/lu";
@@ -11,9 +10,13 @@ import { FaRegPlusSquare } from "react-icons/fa";
 import { RiAdminLine } from "react-icons/ri";
 import { RiLoginBoxLine } from "react-icons/ri";
 import { IoPersonAddOutline } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { authContext } from "../context/authContextAPI";
+import Userdrobdawn from "./userdrobdawn";
 
 function Header() {
+
+  const { user } = useContext(authContext);
   return (
     <div >
       <Navbar
@@ -23,6 +26,7 @@ function Header() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          minHeight: "10vh"
         }}
         className=""
       >
@@ -48,53 +52,65 @@ function Header() {
               }}
             />{" "}
           </Navbar.Brand>
+          {
+            user ? <>
+              <Navbar.Toggle aria-controls="navbarScroll" />
+              <Navbar.Collapse id="navbarScroll">
+                <Nav
+                  className="me-auto my-2 my-lg-0"
+                  style={{
+                    fontSize: "20px",
+                    fontWeight: "500",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "25px",
+                  }}
+                  navbarScroll
+                >
 
-          <Navbar.Toggle aria-controls="navbarScroll" />
+                  <Link to="/" style={{ color: "#fff" }}>
+                    <IoHomeOutline style={{ margin: "0 5px 3px 0 " }} />
+                    Home
+                  </Link>
+                  <Link to="/posts" style={{ color: "#fff" }}>
+                    {" "}
+                    <LuFileSignature style={{ margin: "0 5px 3px 0 " }} />
+                    Posts
+                  </Link>
+                  <Link to="/CreatePost" style={{ color: "#fff" }}>
+                    <FaRegPlusSquare style={{ margin: "0 5px 3px 0 " }} />
+                    Create
+                  </Link>
+                  {
+                    user.isAdmin ?
+                      <Link to="/admin" style={{ color: "#fff" }}>
+                        <RiAdminLine style={{ margin: "0 5px 3px 0 " }} />
+                        Admin Dashboard
+                      </Link>
+                      : ""
+                  }
 
-          <Navbar.Collapse id="navbarScroll">
-            <Nav
-              className="me-auto my-2 my-lg-0"
-              style={{
-                fontSize: "20px",
-                fontWeight: "500",
-                display: "flex",
-                alignItems: "center",
-                gap: "25px",
-              }}
-              navbarScroll
-            >
-              <Link to="/" style={{ color: "#fff" }}>
-                <IoHomeOutline style={{ margin: "0 5px 3px 0 " }} />
-                Home
-              </Link>
-              <Link to="/posts" style={{ color: "#fff" }}>
-                {" "}
-                <LuFileSignature style={{ margin: "0 5px 3px 0 " }} />
-                Posts
-              </Link>
-              <Link to="/CreatePost" style={{ color: "#fff" }}>
-                <FaRegPlusSquare style={{ margin: "0 5px 3px 0 " }} />
-                Create
-              </Link>
-              <Link to="/admin" style={{ color: "#fff" }}>
-                <RiAdminLine style={{ margin: "0 5px 3px 0 " }} />
-                Admin Dashboard
-              </Link>
-            </Nav>
-            <div>
-              <Button variant="light" style={{ margin: "5px" }}>
-                <Link to="/login" style={{ color: "black" }}>
+                </Nav>
+                <Userdrobdawn />
+
+              </Navbar.Collapse>
+            </> : <><div>
+              <Link to="/login" style={{ color: "black" }}>
+                <Button variant="light" style={{ margin: "5px" }}>
                   <RiLoginBoxLine style={{ margin: "0 5px 3px 0 " }} /> Login
-                </Link>
-              </Button>{" "}
-              <Button variant="light" style={{ margin: "5px" }}>
-                <Link to="/register" style={{ color: "black" }}>
+                </Button>{" "}
+              </Link>
+
+              <Link to="/register" style={{ color: "black" }}>
+                <Button variant="light" style={{ margin: "5px" }}>
                   <IoPersonAddOutline style={{ margin: "0 5px 3px 0 " }} />
                   Register
-                </Link>
-              </Button>{" "}
-            </div>
-          </Navbar.Collapse>
+                </Button>{" "}
+              </Link>
+
+            </div></>
+          }
+
         </Container>
       </Navbar>
     </div>

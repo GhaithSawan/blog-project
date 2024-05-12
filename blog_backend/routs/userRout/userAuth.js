@@ -50,6 +50,7 @@ router.post(
       id: user.id,
       isAdmin: user.isAdmin,
       profilePhoto: user.profilePhoto,
+      username: user.username,
       token
     }); // تصحيح في رسالة النجاح
   })

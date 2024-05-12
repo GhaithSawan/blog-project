@@ -23,7 +23,6 @@ const CommentForm = ({ setReloadData }) => {
         }
       )
       .then((res) => {
-        console.log(res);
         setReloadData((prevState) => !prevState);
       })
       .catch((e) => {

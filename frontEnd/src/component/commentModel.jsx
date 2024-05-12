@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { Urlaxios } from "../constant";
+import { Urlaxios, token } from "../constant";
 import { toast } from "react-toastify";
 
 function CommentModel({ setShow, show, data }) {
@@ -19,7 +19,7 @@ function CommentModel({ setShow, show, data }) {
         {
           headers: {
             authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MmMyNjMwOGY5NjlhMzg5MDI3ZGE1MyIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE3MTQxNjk0MjN9._3vkFk5RR_t7KQZH2rWxCWd_9ea4dxQ1B6E5y5sYFBM",
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzkwOTE1ZmNhOTkwMDE4YjViMTk5MyIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE3MTUwMTM5MjN9.g4lj-kAEj9AzDGPg2zm_60Y-BK_M123ODj0QdyO5mFI",
           },
         }
       )

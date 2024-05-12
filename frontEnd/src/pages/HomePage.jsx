@@ -2,21 +2,25 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Urlaxios } from "../constant";
 import Postslist from "../component/postslist";
+import { Link } from "react-router-dom";
 
 const homePage = () => {
   const [catigoryData, setCatigoryData] = useState();
   useEffect(() => {
+    window.scrollTo(0, 0);
     axios(`${Urlaxios}/CatigoryRouts/getAllCatigory`)
       .then((res) => {
         setCatigoryData(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
+
         console.log(err);
       });
   }, []);
 
   return (
-    <div className='allpages '>
+    <div className='allpages  '>
       <div
         className="header w-100"
         style={{
@@ -45,20 +49,21 @@ const homePage = () => {
               {catigoryData?.length > 0
                 ? catigoryData.map((e, index) => {
                   return (
-                    <button
-                      key={index}
-                      style={{
-                        border: "none",
-                        fontSize: "18px",
-                        backgroundColor: "#c2743e",
-                        padding: "5px 15px 5px 15px ",
-                        borderRadius: "20px",
-                        color: "#fff",
-                        width: "100%",
-                      }}
-                    >
-                      {e.title}
-                    </button>
+                    <Link style={{ width: "100%" }} to={`/catigoryPage/${e.title}`}>
+                      <button
+                        key={index}
+                        style={{
+                          border: "none",
+                          fontSize: "18px",
+                          backgroundColor: "#c2743e",
+                          padding: "5px 15px 5px 15px ",
+                          borderRadius: "20px",
+                          color: "#fff",
+                          width: "100%",
+                        }}
+                      >
+                        {e.title}
+                      </button></Link>
                   );
                 })
                 : "no data"}

@@ -17,18 +17,18 @@ router.post(
   verfiyToken,
   expressAsyncHandler(async (req, res) => {
     try {
-      console.log("req.user -2 ", req.user);
+      console.log("req.user -2 ", req.user.id);
 
       let { error } = validationcreateComment(req.body);
       if (error) {
         return res.status(400).json({ message: error.details[0].message }); // استخدام return للخروج من الدالة
       }
-      let profile = await userModel.findById(req?.user?.id);
-      console.log("profile", profile);
+      let profilee = await userModel.findById(req?.user?.id);
+      console.log("profile", profilee);
       let post = await commentModel.create({
         text: req.body.text,
         user: req.user.id,
-        username: profile.username,
+        username: profilee.username,
         postId: req.body.postId,
       });
 
@@ -68,7 +68,7 @@ router.delete(
 );
 
 router.put(
-  "/w/:id",
+  "/updateComment/:id",
   verfiyToken,
   validateObjectId,
   expressAsyncHandler(async (req, res) => {

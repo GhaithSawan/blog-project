@@ -11,7 +11,6 @@ const Commentlist = ({ data }) => {
     setShow(true);
   };
 
-  // قي غلط عند حذف امتر من كومنت
   function deletebtn(id) {
     let anwer = confirm("Are you sure");
     if (anwer) {

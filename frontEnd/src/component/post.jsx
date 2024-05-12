@@ -5,8 +5,6 @@ import { Link } from "react-router-dom"
 function Post({ data }) {
   let date;
   useEffect(() => {
-    console.log(data);
-
     date = new Date(data?.createdAt);
   }, []);
 
@@ -22,17 +20,21 @@ function Post({ data }) {
       </div>
       <Card.Body>
         <div className="info d-flex align-items-center  justify-content-between border-bottom border-gray  border-2">
-          <p
-            style={{
-              color: "green",
-              fontWeight: "500",
-              fontSize: "20px",
-              marginBottom: "0",
-            }}
-          >
-            Author :{" "}
-            <span style={{ color: "black" }}>{data.user.username}</span>
-          </p>
+          <Link to={`/profile/${data.user.id}`}>
+            <p
+              style={{
+                color: "green",
+                fontWeight: "500",
+                fontSize: "20px",
+                marginBottom: "0",
+                cursor: "pointer"
+              }}
+            >
+              Author :{" "}
+              <span style={{ color: "black" }}>{data.user.username}</span>
+            </p>
+          </Link>
+
           <p style={{ color: "light-green", marginBottom: "0 " }}>{date}</p>
         </div>
         <div className="d-flex align-items-center justify-content-between my-2">

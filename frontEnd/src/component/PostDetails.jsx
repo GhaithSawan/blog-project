@@ -10,8 +10,10 @@ import { Urlaxios } from "../constant";
 import axios from "axios";
 import CommentForm from "./commentForm";
 import Commentlist from "./commentlist ";
+import Button from "react-bootstrap/esm/Button";
 
 const PostDetails = () => {
+  const [imageuserselect, setimageuserselect] = useState()
   const [reloadData, setReloadData] = useState(false);
   let { id } = useParams();
   const [postData, setPostData] = useState();
@@ -19,9 +21,8 @@ const PostDetails = () => {
 
   useEffect(() => {
     let date = new Date(postData?.createdAt);
-    const formattedDate = `${date.getDate()}/${
-      date.getMonth() + 1
-    }/${date.getFullYear()} `;
+    const formattedDate = `${date.getDate()}/${date.getMonth() + 1
+      }/${date.getFullYear()} `;
     setdate(formattedDate);
   }, [postData]);
 
@@ -36,13 +37,13 @@ const PostDetails = () => {
       });
   }, []);
   useEffect(() => {
-      axios(`${Urlaxios}/postRouts/getPost/${id}`)
-        .then((res) => {
-          setPostData(res.data);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+    axios(`${Urlaxios}/postRouts/getPost/${id}`)
+      .then((res) => {
+        setPostData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [reloadData]);
 
   return (
@@ -62,7 +63,7 @@ const PostDetails = () => {
           >
             <img
               className="imagePostHover"
-              src={postData?.image?.url}
+              src={imageuserselect ? URL.createObjectURL(imageuserselect) : postData?.image?.url}
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           </div>
@@ -78,6 +79,7 @@ const PostDetails = () => {
             placeholder="sa"
             id="inputimg"
             style={{ display: "none" }}
+            onChange={(e) => setimageuserselect(e.target.files[0])}
           />
           <button
             style={{
@@ -92,6 +94,8 @@ const PostDetails = () => {
           >
             Upload
           </button>
+          <Button onClick={() => setimageuserselect(null)} style={{ padding: "3px 6px", fontSize: "17`px", margin: " 0 5px ", backgroundColor: "#4c6177", border: "none", display: `${imageuserselect ? "inline-block" : "none"}` }}>Cancel</Button>
+
         </div>
         <div
           className="profile d-flex gap-2 "

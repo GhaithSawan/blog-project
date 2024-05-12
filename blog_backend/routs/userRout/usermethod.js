@@ -73,32 +73,19 @@ router.post(
   storge.single("img"),
   async (req, res) => {
     if (!req.file) {
-      return res.status(400).json({ message: "not file provied" });
+      return res.status(400).json({ message: "not file provided" });
     }
-    console.log("1");
-
     let imgpath = path.join(__dirname, `../../images/${req.file.filename}`);
-    console.log("2");
     let result = await aploudtoCloud(imgpath);
-    console.log("3");
-    console.log(result);
-
     let user = await userModel.findById(req.user.id);
-    console.log("4");
-
     if (user.profilePhoto.publicId !== null) {
-      console.log("zaghb");
-      console.log(user.profilePhoto.publicId);
       await DeletCloud(user.profilePhoto.publicId);
     }
-    console.log("5");
     user.profilePhoto = {
       url: result.secure_url,
       publicId: result.public_id,
     };
     user.save();
-    console.log("6");
-
     res.status(200).json({
       message: "img uplouded",
       profilePhoto: {

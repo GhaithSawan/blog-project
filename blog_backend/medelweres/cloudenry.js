@@ -34,7 +34,7 @@ async function DeletCloudMany(imgIds) {
         let data = await cloudinary.v2.api.delete_resources(imgIds)
         return data
     } catch (error) {
-        return error
+        throw new Error("cloudinary error")
     }
 }
 module.exports = {

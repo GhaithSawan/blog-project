@@ -35,7 +35,7 @@ async function verfiyTokenandHimSelfandAdmin(req, res, next) {
     } else {
       return res
         .status(401)
-        .json({ message: "you not the user or you not Admin" });
+        .json({ message: "Not Authorized" });
     }
   });
 }
