@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   MdOutlineDeleteOutline,
   MdOutlineEdit,
@@ -11,31 +11,66 @@ import axios from "axios";
 import CommentForm from "./commentForm";
 import Commentlist from "./commentlist ";
 import Button from "react-bootstrap/esm/Button";
+import { authContext } from "../context/authContextAPI";
+import { toast } from "react-toastify";
+import PostModel from "./postModel";
 
 const PostDetails = () => {
+  let navi = useNavigate()
+  let {user} = useContext(authContext)
+  const [likestoggel, setlikestoggel] = useState(false)
   const [imageuserselect, setimageuserselect] = useState()
   const [reloadData, setReloadData] = useState(false);
   let { id } = useParams();
   const [postData, setPostData] = useState();
   const [date, setdate] = useState();
+  const [reloud, setreloud] = useState(false);
+ 
+  const [show, setShow] = useState(false);
+
+  const handleShow = (comData) => {
+    setShow(true);
+  };
+
+  function deletePostBtn(id) {
+    let anwer = confirm("Are you sure");
+    if (anwer) {
+      axios.delete(`${Urlaxios}/postRouts/deletePost/${id}`, {
+        headers: {
+          Authorization: "Bearer " + user.token
+        }
+      }).then((res) => {
+        setreloud(!reloud)
+        toast.success("Post is Deleted");
+        navi("/")
+      }).catch((e) => {
+        toast.error(e.response.data.message)
+      })
+    }
+  }
 
   useEffect(() => {
+
     let date = new Date(postData?.createdAt);
     const formattedDate = `${date.getDate()}/${date.getMonth() + 1
       }/${date.getFullYear()} `;
     setdate(formattedDate);
   }, [postData]);
-
   useEffect(() => {
     window.scrollTo(0, 0);
+  }, [])
+
+  useEffect(() => {
+
     axios(`${Urlaxios}/postRouts/getPost/${id}`)
       .then((res) => {
+        console.log(res.data);
         setPostData(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [reloud]);
   useEffect(() => {
     axios(`${Urlaxios}/postRouts/getPost/${id}`)
       .then((res) => {
@@ -45,6 +80,24 @@ const PostDetails = () => {
         console.log(err);
       });
   }, [reloadData]);
+
+  function likestoggelfun() {
+    axios.put(`${Urlaxios}/postRouts/likes/${postData?._id}`,{},
+      {
+        headers: {
+          Authorization: "Bearer " + user.token
+        },
+      }
+    )
+      .then((res) => {
+        console.log(res);
+        setreloud(!reloud)
+        setlikestoggel(!likestoggel)
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   return (
     <div className="allpages p-3 ">
@@ -67,35 +120,39 @@ const PostDetails = () => {
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
             />
           </div>
-          <label
-            htmlFor="inputimg"
-            style={{ color: "var(--blue-color)", fontSize: "15px" }}
-          >
-            <MdPhotoSizeSelectLarge style={{ marginRight: "8px" }} />
-            Select image
-          </label>
-          <input
-            type="file"
-            placeholder="sa"
-            id="inputimg"
-            style={{ display: "none" }}
-            onChange={(e) => setimageuserselect(e.target.files[0])}
-          />
-          <button
-            style={{
-              border: "none",
-              backgroundColor: "var(--secondary-color)",
-              marginLeft: "5px",
-              borderRadius: "5px",
-              padding: "3px 6px",
-              color: "#fff",
-              fontSize: "16px",
-            }}
-          >
-            Upload
-          </button>
-          <Button onClick={() => setimageuserselect(null)} style={{ padding: "3px 6px", fontSize: "17`px", margin: " 0 5px ", backgroundColor: "#4c6177", border: "none", display: `${imageuserselect ? "inline-block" : "none"}` }}>Cancel</Button>
+          {
+            postData?.user?._id == user?.id ? <>
+              <label
+                htmlFor="inputimg"
+                style={{ color: "var(--blue-color)", fontSize: "15px" }}
+              >
+                <MdPhotoSizeSelectLarge style={{ marginRight: "8px" }} />
+                Select image
+              </label>
+              <input
+                type="file"
+                placeholder="sa"
+                id="inputimg"
+                style={{ display: "none" }}
+                onChange={(e) => setimageuserselect(e.target.files[0])}
+              />
+              <button
+                style={{
+                  border: "none",
+                  backgroundColor: "var(--secondary-color)",
+                  marginLeft: "5px",
+                  borderRadius: "5px",
+                  padding: "3px 6px",
+                  color: "#fff",
+                  fontSize: "16px",
+                }}
+              >
+                Upload
+              </button>
+              <Button onClick={() => setimageuserselect(null)} style={{ padding: "3px 6px", fontSize: "17`px", margin: " 0 5px ", backgroundColor: "#4c6177", border: "none", display: `${imageuserselect ? "inline-block" : "none"}` }}>Cancel</Button>
 
+            </> : ""
+          }
         </div>
         <div
           className="profile d-flex gap-2 "
@@ -142,6 +199,7 @@ const PostDetails = () => {
           }}
         >
           <div
+            onClick={likestoggelfun}
             className="like"
             style={{
               cursor: "pointer",
@@ -149,31 +207,38 @@ const PostDetails = () => {
               alignItems: "center",
               justifyContent: "center",
               gap: "5px",
+             
             }}
           >
-            <AiOutlineLike size={"25px"} />
+            <AiOutlineLike size={"25px"} style={{ color:`${likestoggel?"blue":"black"}`}} />
             <span>{postData?.likes.length}</span>
           </div>
-          <div
-            className="edit"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              gap: "10px",
-            }}
-          >
-            <div style={{ cursor: "pointer" }}>
-              <MdOutlineEdit size={"25px"} />
-            </div>
-            <div style={{ cursor: "pointer" }}>
-              <MdOutlineDeleteOutline size={"25px"} />
-            </div>
-          </div>
-        </div>
+          {
+            postData?.user?._id == user?.id ? <>
+              <div
+                className="edit"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: "10px",
+                }}
+              >
+                <div onClick={handleShow} style={{ cursor: "pointer" }}>
+                  <MdOutlineEdit size={"25px"} />
+                </div>
+                <div onClick={()=>deletePostBtn(postData?.id)} style={{ cursor: "pointer" }}>
+                  <MdOutlineDeleteOutline size={"25px"} />
+                </div>
+              </div>
+            </> : ""
 
+          }
+
+        </div>
+          <PostModel  setShow={setShow} show={show} data={postData} reloud={reloadData} setReloadData={setReloadData}/>
         <CommentForm setReloadData={setReloadData} />
-        <Commentlist data={postData} />
+        <Commentlist data={postData} setreloud={setreloud} reloud={reloud} />
       </div>
     </div>
   );

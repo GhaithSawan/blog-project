@@ -11,10 +11,8 @@ const homePage = () => {
     axios(`${Urlaxios}/CatigoryRouts/getAllCatigory`)
       .then((res) => {
         setCatigoryData(res.data);
-        console.log(res.data);
       })
       .catch((err) => {
-
         console.log(err);
       });
   }, []);

@@ -117,7 +117,8 @@ router.put(
         },
         { new: true }
       )
-      .populate("user", ["-password"]);
+      .populate("user", ["-password"]).populate("Comment");
+      
     res.status(200).json(new_post);
   })
 );
@@ -209,8 +210,6 @@ router.put(
     let postfind = post.likes.some((user) => user.toString() === req.user.id);
 
     console.log(postfind);
-     
-   
 
     if (postfind) {
       console.log("pull");

@@ -3,14 +3,17 @@ import { authContext } from '../context/authContextAPI';
 import { useNavigate } from 'react-router-dom';
 
 const ProtectedRoute = ({ children }) => {
-    const { user } = useContext(authContext);
-    const navigate = useNavigate();
 
+    const navigate = useNavigate();
+    let user = localStorage.getItem("user")
     useEffect(() => {
-        if (!user) {
+        if (user === null) {
+            console.log("its null");
             navigate("/login");
         }
-    }, [user]);
+        console.log("its  not null");
+
+    }, [user])
 
     return <div>{user ? children : ""}</div>;
 }

@@ -1,24 +1,49 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { PostRequest } from "../../requests/postrequest";
 import { toast } from "react-toastify";
-
+import axios from "axios";
+import { Urlaxios } from "../constant";
+import { authContext } from "../context/authContextAPI";
+import { useNavigate } from "react-router-dom";
 const CreatePost = () => {
+  let navi = useNavigate()
+  let { user } = useContext(authContext)
+  console.log(user.token);
   const [title, settitle] = useState("");
   const [desc, setdesc] = useState("");
   const [cat, setcat] = useState("");
   const [file, setfile] = useState(null);
-
+  const [allCatigory, setallCatigory] = useState()
   function posthandler(e) {
-    // todo react-toastify
     e.preventDefault();
-    //todo react toastify
     let form_data = new FormData()
-    form_data.append("title",title)
-    form_data.append("description",desc)
-    form_data.append("caticory",cat)
-    form_data.append("img",file)
-    toast.error("dsa")
+    form_data.append("title", title)
+    form_data.append("description", desc)
+    form_data.append("caticory", cat)
+    form_data.append("img", file)
+    axios.post(`${Urlaxios}/postRouts/createPost`, form_data, {
+      headers: {
+        Authorization: "Bearer " + user.token // اضف مسافة بين "Bearer" والرمز المميز
+      }
+    }).then((res) => {
+      navi("/")
+      toast.success("Post Add")
+
+    }).catch((e) => {
+      toast.error(e?.response?.data?.message)
+    })
   }
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    axios(`${Urlaxios}/CatigoryRouts/getAllCatigory`)
+      .then((res) => {
+        setallCatigory(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <div className="allpages">
       <div
@@ -57,7 +82,7 @@ const CreatePost = () => {
               padding: "10px",
               border: "1px #778697 solid",
             }}
-            value={cat}
+            value={cat?cat:""}
             onChange={(e) => {
               setcat(e.target?.value);
             }}
@@ -65,8 +90,13 @@ const CreatePost = () => {
             <option disabled value="">
               Select A Category
             </option>
-            <option value="Coffee">Coffee</option>
-            <option value="music">music</option>
+            {
+              allCatigory?.map((e) => {
+                return (
+                  <option >{e.title}</option>
+                )
+              })
+            }
           </select>
           <textarea
             placeholder="Add Description"

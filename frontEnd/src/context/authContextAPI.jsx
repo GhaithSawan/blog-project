@@ -12,7 +12,6 @@ const AuthContextProvider = ({ children }) => {
     }, []);
 
     const updateUser = (newUser) => {
-        console.log("12");
         setUser(newUser);
         localStorage.setItem("user", JSON.stringify(newUser));
     };

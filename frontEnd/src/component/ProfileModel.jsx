@@ -14,6 +14,14 @@ function ProfileModel({ setShow, show ,data,setreloud,reloud}) {
   const [password, setpassword] = useState();
   const handleClose = () => setShow(false);
 
+
+  
+  useEffect(() => {
+    setusername(data?.username);
+    setbio(data?.bio || '');
+  }, [data]);
+
+
   function handleCloseandsave() {
     axios
       .put(
@@ -50,7 +58,7 @@ function ProfileModel({ setShow, show ,data,setreloud,reloud}) {
           <input
             type="text"
             onChange={(e) => setusername(e?.target?.value)}
-            value={username ? username : data?.username}
+            value={username}
             style={{
               width: "100%",
               padding: "5px",
@@ -64,7 +72,7 @@ function ProfileModel({ setShow, show ,data,setreloud,reloud}) {
           <input
             type="text"
             onChange={(e) => setbio(e?.target?.value)}
-            value={bio ? bio : data?.bio}
+            value={bio}
             style={{
               width: "100%",
               padding: "5px",

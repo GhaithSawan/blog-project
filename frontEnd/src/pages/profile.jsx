@@ -8,11 +8,10 @@ import { Urlaxios } from '../constant';
 import { json, useNavigate, useParams } from 'react-router-dom';
 import ProfileModel from "../component/ProfileModel";
 import { authContext } from '../context/authContextAPI';
-import updateUser from "../context/authContextAPI"
 import { toast } from 'react-toastify';
 const profile = () => {
 
-  const { user } = useContext(authContext);
+  const { user, updateUser } = useContext(authContext);
 
   const [userpostboolen, setuserpostboolen] = useState(false)
   let { id } = useParams();
@@ -33,7 +32,7 @@ const profile = () => {
       setdata(res.data)
       console.log(res.data)
     })
-  }, [imageuserselect,reloud])
+  }, [imageuserselect, reloud])
 
   useEffect(() => {
     let date = new Date(data?.createdAt);
@@ -52,7 +51,7 @@ const profile = () => {
       toast.success("User deleted")
       console.log(res.data.message)
       navi("/")
-    }).catch((e)=>{
+    }).catch((e) => {
       toast.error(e.response.data.message)
 
     })
@@ -73,18 +72,19 @@ const profile = () => {
         toast.success("Photo Changed")
 
         setimageuserselect(res?.profilePhoto?.url)
+        console.log("res");
         console.log(res);
-        // user.profilePhoto = res?.profilePhoto?.url
-        // console.log(user.profilePhoto);
 
-        // localStorage.setItem("user", JSON.stringify(user))
-      // updateUser(JSON.parse(localStorage.getItem("user")))
+        user.profilePhoto = res?.data.profilePhoto
+        console.log("user.profilePhoto");
+        console.log(user.profilePhoto);
+        updateUser({ ...user, profilePhoto: user.profilePhoto })
 
-      }).catch((e)=>{
+      }).catch((e) => {
         toast.error(e.response.data.message)
 
       })
-      
+
   }
 
 
@@ -122,9 +122,11 @@ const profile = () => {
       <div className="userposts py-5 container col-10 d-flex align-items-center justify-content-center flex-column">
         <h2 className="title text-center m-auto mb-5" style={{ borderBottom: "1px solid black", width: "max-content" }}> {data.username} Posts</h2>
         <Postslist userpostboolen={userpostboolen} postscurentuser={data?.posts} />
-        <div className="deleteAccount mt-5  ">
-          <Button variant="outline-danger" onClick={deleteUserFun}>Delete Your Account</Button>
-        </div>
+        {
+          data?.id == user?.id ? <> <div className="deleteAccount mt-5  ">
+            <Button variant="outline-danger" onClick={deleteUserFun}>Delete Your Account</Button>
+          </div></> : ""
+        }
 
       </div>
 

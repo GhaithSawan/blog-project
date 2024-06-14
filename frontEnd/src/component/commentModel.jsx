@@ -1,12 +1,15 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { Urlaxios, token } from "../constant";
 import { toast } from "react-toastify";
+import { authContext } from "../context/authContextAPI";
 
-function CommentModel({ setShow, show, data }) {
-  const [text, settext] = useState();
+function CommentModel({ setShow, show, data ,reloud,setreloud}) {
+  const { user } = useContext(authContext);
+
+  const [text, settext] = useState(null);
   const handleClose = () => setShow(false);
 
   function handleCloseandsave() {
@@ -18,19 +21,19 @@ function CommentModel({ setShow, show, data }) {
         },
         {
           headers: {
-            authorization:
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MzkwOTE1ZmNhOTkwMDE4YjViMTk5MyIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE3MTUwMTM5MjN9.g4lj-kAEj9AzDGPg2zm_60Y-BK_M123ODj0QdyO5mFI",
+            Authorization: "Bearer " + user.token
           },
         }
       )
       .then((res) => {
-        toast.apply("comment is updating");
+        handleClose();
+        toast.success("comment is updating");
+        setreloud(!reloud)
       })
       .catch((e) => {
-        toast.error(e);
+        toast.error(e.response.data.message)
       });
-    handleClose();
-    window.location.reload();
+    
   }
 
   return (
@@ -43,7 +46,6 @@ function CommentModel({ setShow, show, data }) {
           <input
             type="text"
             onChange={(e) => settext(e?.target?.value)}
-            value={text ? text : data?.text}
             style={{
               width: "100%",
               padding: "5px",

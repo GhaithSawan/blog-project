@@ -4,9 +4,7 @@ import Post from "../component/post";
 import { Urlaxios } from "../constant";
 
 const Postslist = ({ requestType, value, userpostboolen = true, postscurentuser }) => {
-
   const [postsData, setPostsData] = useState();
-
   useEffect(() => {
     if (userpostboolen) {
       axios(`${Urlaxios}/postRouts/getAllPosts?${requestType}=${value}`)

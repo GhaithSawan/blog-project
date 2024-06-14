@@ -1,9 +1,13 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Urlaxios, token } from "../constant";
 import { useParams } from "react-router-dom";
+import { authContext } from "../context/authContextAPI";
+import { toast } from "react-toastify";
 
 const CommentForm = ({ setReloadData }) => {
+  const { user } = useContext(authContext);
+
   let { id } = useParams();
   const [comment, setcomment] = useState("");
 
@@ -18,14 +22,17 @@ const CommentForm = ({ setReloadData }) => {
         },
         {
           headers: {
-            Authorization: token,
+            Authorization: "Bearer " + user.token
           },
         }
       )
       .then((res) => {
+        toast.success("Comment Created")
         setReloadData((prevState) => !prevState);
       })
       .catch((e) => {
+          toast.error(e.response.data.message)
+       
         console.log(e);
       });
 

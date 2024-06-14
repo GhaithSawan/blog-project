@@ -1,10 +1,14 @@
-let mongoose = require("mongoose")
-
-module.exports = async()=>{
-    try {
-        await mongoose.connect(`mongodb+srv://ghaithx1x2x3:XnW6akfYx0OdsgqYEW@cluster0.11picll.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`)
-        console.log("DB Connect");
-    } catch (error) {
-      console.log(error);  
-    }
-}
+const mongoose = require("mongoose");
+module.exports = async () => {
+  try {
+    // استبدل 'test' باسم قاعدة البيانات التي ترغب في استخدامها
+    const dbURI = `${process.env.DB}`;
+    await mongoose.connect(dbURI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true
+    });
+    console.log("DB Connected successfully");
+  } catch (error) {
+    console.log("DB connection error:", error);
+  }
+};

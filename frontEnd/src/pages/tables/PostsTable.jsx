@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Table from 'react-bootstrap/Table';
 import Sidebaradmin from '../../component/sidebaradmin';
 import Button from 'react-bootstrap/esm/Button';
@@ -6,8 +6,11 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { Urlaxios } from '../../constant';
 import { Link } from 'react-router-dom';
+import { authContext } from '../../context/authContextAPI';
+import { toast } from 'react-toastify';
 
 const PostsTable = () => {
+  const { user } = useContext(authContext);
   const [reloud, setreloud] = useState(false)
   const [dataposts, setdataposts] = useState()
   useEffect(() => {
@@ -23,11 +26,14 @@ const PostsTable = () => {
     if (shecked) {
       axios.delete(`${Urlaxios}/postRouts/deletePost/${id}`, {
         headers: {
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MmMyNjMwOGY5NjlhMzg5MDI3ZGE1MyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcxNTI0NzgxMX0.v2VRVfa2KqA7nyH8A3J18ugJhBRTWwjo50tay45KaV0'
+          Authorization: "Bearer " + user.token,
+
         }
       }).then((res) => {
-        console.log(res.data.message)
+        toast.success("Post Deleted")
         setreloud(!reloud)
+      }).catch((e)=>{
+        toast.error(e.response.data.message)
       })
     }
   }
@@ -52,8 +58,8 @@ const PostsTable = () => {
               dataposts?.map((e, index) => {
                 return (<tr>
                   <td style={{ backgroundColor: "#efeef2", border: "1px gray solid", textAlign: "center" }}>{index + 1}</td>
-                  <td style={{ backgroundColor: "#efeef2", border: "1px gray solid", textAlign: "center" }}>{e.user.username}</td>
-                  <td style={{ backgroundColor: "#efeef2", border: "1px gray solid", textAlign: "center" }}>{e.title}</td>
+                  <td style={{ backgroundColor: "#efeef2", border: "1px gray solid", textAlign: "center" }}>{e?.user?.username}</td>
+                  <td style={{ backgroundColor: "#efeef2", border: "1px gray solid", textAlign: "center" }}>{e?.title}</td>
                   <td style={{ backgroundColor: "#efeef2", border: "1px gray solid", display: "flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
                     <Link to={`/post/details/${e.id}`}>
                       <Button variant="success">View Post</Button>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Table from 'react-bootstrap/Table';
 import Sidebaradmin from '../../component/sidebaradmin';
 import Button from 'react-bootstrap/esm/Button';
@@ -6,8 +6,12 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { Urlaxios } from '../../constant';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { authContext } from '../../context/authContextAPI';
 
 const UsersTable = () => {
+  const { user } = useContext(authContext);
+
   const [reloud, setreloud] = useState(false)
   const [datausers, setdatausers] = useState()
   useEffect(() => {
@@ -22,13 +26,7 @@ const UsersTable = () => {
     })
   }, [reloud])
 
-  const [dataposts, setdataposts] = useState()
-  useEffect(() => {
-    axios(`${Urlaxios}/postRouts/getAllPosts`).then((res) => {
-      console.log(res);
-      setdataposts(res.data)
-    })
-  }, [reloud])
+  
 
 
 
@@ -37,11 +35,14 @@ const UsersTable = () => {
     if (shecked) {
       axios.delete(`${Urlaxios}/usermethod/deleteUser/${id}`, {
         headers: {
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY2MmMyNjMwOGY5NjlhMzg5MDI3ZGE1MyIsImlzQWRtaW4iOnRydWUsImlhdCI6MTcxNTI0NzgxMX0.v2VRVfa2KqA7nyH8A3J18ugJhBRTWwjo50tay45KaV0'
+          Authorization: "Bearer " + user.token,
         }
       }).then((res) => {
+        toast.success("User Deleted")
         console.log(res.data.message)
         setreloud(!reloud)
+      }).catch((e)=>{
+        toast.error(e.response.data.message)
       })
     }
   }
