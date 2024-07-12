@@ -1,4 +1,2 @@
-
-
-export const Urlaxios = "http://localhost:3000"
+export const Urlaxios = "https://blog-project-io11.onrender.com"
 export const token = "Bearer "
