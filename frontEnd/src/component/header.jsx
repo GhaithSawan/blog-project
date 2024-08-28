@@ -70,7 +70,7 @@ function Header() {
 
                   <Link to="/" style={{ color: "#fff" }}>
                     <IoHomeOutline style={{ margin: "0 5px 3px 0 " }} />
-                    Home
+                    Homee
                   </Link>
                   <Link to="/posts" style={{ color: "#fff" }}>
                     {" "}
